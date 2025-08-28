@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.sessions.models import Session
 from django_store import settings
+from checkout.models import Transaction
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -44,9 +45,8 @@ class Product(models.Model):
         return self.name
 
 
-class Orders(models.Model):
-    customer = models.JSONField(default=dict)
-    total = models.FloatField()
+class Order(models.Model):
+    transaction = models.OneToOneField(Transaction, on_delete=models.PROTECT, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -58,7 +58,7 @@ class Orders(models.Model):
         return self.id
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Orders, on_delete=models.PROTECT)
+    order = models.ForeignKey(Order, on_delete=models.PROTECT)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)

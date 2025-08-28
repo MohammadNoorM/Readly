@@ -79,4 +79,5 @@ def checkout(request):
     return render(request, 'checkout.html')
 
 def checkout_complete(request):
+    Cart.objects.filter(session=request.session.session_key).delete()
     return render(request, 'checkout-complete.html')

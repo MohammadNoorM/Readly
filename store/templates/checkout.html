@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n my_filters %}
+
 {% block content %}
 {% include "common/page_title.html" with  title='Checkout' %}
 <div class="bg-white py-4">
@@ -19,7 +20,7 @@
       <h4 class="my-3">{% trans "Your Information" %}</h4>
       <div class="card">
         <div class="card-body">
-          <form id="form-user-info" action="{% url 'checkout.order' %}" method="POST">
+          <form id="form-user-info">
             {% csrf_token %}
             <div class="row">
               <div class="col-md-6">
@@ -57,7 +58,6 @@
                 required
               />
             </div>
-            <button class="btn btn-primary">{% trans "Continue to Payment" %}</button>
           </form>
         </div>
       </div>
@@ -71,8 +71,8 @@
             </div>
           </div>
         </div>
-        <div id="pm-stripe" class="col-md-6">
-          <div class="card" role="button">
+        <div class="col-md-6">
+          <div class="card" role="button" onclick="createStripeSession()">
             <div class="card-body text-center">
               <p>{% trans "Credit Card" %}</p>
               <i class="lni lni-credit-cards fs-1"></i>
@@ -80,18 +80,15 @@
           </div>
         </div>
       </div>
-      <div id="payment-cont" class="card mt-3 d-none">
-        <div class="card-body text-center">
-          <div id="paypal-cont"></div>
-          <div id="stripe-cont">
+      <div class="col-md-12">
+        <div id="payment-form-container">
+          <div id="stripe-card" class="card my-3 p-3" style="display: none">
             <form id="payment-form">
               <div id="payment-element"></div>
-              <div class="d-grid gap-2 my-3">
-                <button class="btn btn-primary" type="submit">
-                  إتمام عملية الشراء
-                </button>
-              </div>
-              <div id="payment-message" class="hidden"></div>
+              <button id="stripe-submit" class="btn btn-primary mt-3">
+                {% trans 'Pay Now'%}
+              </button>
+                
             </form>
           </div>
         </div>
