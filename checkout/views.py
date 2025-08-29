@@ -1,12 +1,13 @@
 import math
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django_store import settings
-from .forms import UserInfoForm
+from .forms import UserInfoForm, MyPayPalPaymentsForm
 from .models import Transaction, PaymentMethod
 from store.models import Cart, Product
 from django.utils.translation import gettext as _
 import stripe
-
+from paypal.standard.forms import PayPalPaymentsForm
+from django.urls import reverse
 
 def stripe_config(request):
     return JsonResponse({
@@ -29,8 +30,21 @@ def stripe_transaction(request):
 
 
 def paypal_transaction(request):
-    transaction = make_transaction(request, PaymentMethod.Stripe)
+    transaction = make_transaction(request, PaymentMethod.Paypal)
+    if not transaction:
+        return JsonResponse({'message': _('Invalid information.')}, status=400)
 
+    form = MyPayPalPaymentsForm(initial={
+        'business': settings.PAYPAL_EMAIL,
+        'amount': transaction.amount,
+        'currency_code': settings.CURRENCY,
+        'item_name': f'Order #{transaction.id}',
+        'invoice': transaction.id,
+        'return_url': f"http://{request.get_host()}/{reverse('store.checkout_complete')}",
+        'cancel_return': f"http://{request.get_host()}/{reverse('store.checkout')}",
+        'notify_url': f"http://{request.get_host()}/{reverse('checkout.paypal-webhook')}",
+    })
+    return HttpResponse(form.render_form())
 
 def make_transaction(request, pm):
     form = UserInfoForm(request.POST)
@@ -52,16 +66,4 @@ def make_transaction(request, pm):
             payment_method=pm,
             items=cart.items,
             amount=math.ceil(total)
-        )
-
-
-
-
-
-
-
-
-
-
-
-
+        )    

@@ -64,7 +64,7 @@
       <h4 class="my-3">{% trans "Payment Method" %}</h4>
       <div class="row">
         <div class="col-md-6">
-          <div id="pm-paypal" class="card" role="button">
+          <div id="pm-paypal" class="card" role="button" onclick="createPaypalSession()">
             <div class="card-body text-center">
               <p>{% trans "PayPal" %}</p>
               <i class="lni lni-paypal-original fs-1"></i>
@@ -90,6 +90,9 @@
               </button>
                 
             </form>
+          </div>
+          <div id="paypal-card" class="card my-3 p-3" style="display: none">
+            
           </div>
         </div>
       </div>

@@ -6,6 +6,8 @@ from checkout import models
 from store.models import Order, Product
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from paypal.standard.models import ST_PP_COMPLETED
+from paypal.standard.ipn.signals import valid_ipn_received
 
 
 
@@ -39,8 +41,22 @@ def stripe_webhook(request):
     return HttpResponse(status=200)
 
 
+
+@csrf_exempt
+def paypal_webhook(sender, **kwargs):
+    if sender.payment_status == ST_PP_COMPLETED:
+        if sender.receiver_email != settings.PAYPAL_EMAIL:
+            return
+        print('Payment intent was successful')
+        make_order(sender.invoice)
+
+valid_ipn_received.connect(paypal_webhook)
+
+
 def make_order(transaction_id):
     transaction = models.Transaction.objects.get(pk=transaction_id)
+    transaction.status = models.Transaction.Completed
+    transaction.save()
     order = Order.objects.create(transaction=transaction)
     products = Product.objects.filter(pk__in=transaction.items)
     for product in products:
