@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.sessions.models import Session
 from django_store import settings
 from checkout.models import Transaction
+from django.utils.translation import gettext_lazy as _
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -12,6 +13,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
 
 
 class Author(models.Model):
@@ -22,6 +27,10 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = _("Author")
+        verbose_name_plural = _("Authors")
 
 
 class Product(models.Model):
@@ -43,6 +52,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = _("Product")
+        verbose_name_plural = _("Products")
 
 
 class Order(models.Model):
@@ -50,12 +63,13 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    @property
-    def customer_name(self):
-        return self.customer['first_name'] + ' ' + self.customer['last_name']
-
+    
     def __str__(self):
-        return self.id
+        return str(self.id)
+    
+    class Meta:
+        verbose_name = _("Order")
+        verbose_name_plural = _("Orders")
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
@@ -68,6 +82,9 @@ class Cart(models.Model):
     items = models.JSONField(default=dict)
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = _("Cart")
+        verbose_name_plural = _("Carts")
 
 
 class Slider(models.Model):
@@ -80,3 +97,7 @@ class Slider(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        verbose_name = _("Slider")
+        verbose_name_plural = _("Sliders")

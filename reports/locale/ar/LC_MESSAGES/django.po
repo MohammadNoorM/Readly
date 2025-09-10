@@ -1,0 +1,40 @@
+# عنوان وصفي ما.
+# حقوق النشر (C) السنة مالك حقوق حزمة PACKAGE
+# هذا الملف موزع تحت نفس رخصة حزمة PACKAGE.
+# المؤلف الأول <البريد@العنوان>، السنة.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-09 19:48+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Arabic <LL@li.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\reports\admin.py:51
+msgid "Order Reports"
+msgstr "تقارير المبيعات والطلبات"
+
+#: .\reports\models.py:9
+msgid "Orders"
+msgstr "الطلبات"
+
+#: .\reports\templates\admin\reports\orders.html:6
+msgid "Sales Weekly"
+msgstr "تقرير المبيعات الأسبوعي"
+
+#: .\reports\templates\admin\reports\orders.html:9
+msgid "Sales Monthly"
+msgstr "تقرير المبيعات الشهري"
+
+#: .\reports\templates\admin\reports\orders.html:12
+msgid "Sales Yearly"
+msgstr "تقرير المبيعات السنوي"

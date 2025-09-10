@@ -1,0 +1,67 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+
+    <h1>{% trans "Sales Weekly" %}</h1>
+    <div id="weeklyChart" style="width: calc(100% - 275px)" data-list="{{ weekly_stastics }}"></div>
+
+    <h1>{% trans "Sales Monthly" %}</h1>
+    <div id="monthlyChart" style="width: calc(100% - 275px)" data-list="{{ monthly_stastics }}"></div>
+
+    <h1>{% trans "Sales Yearly" %}</h1>
+    <div id="yearlyChart" style="width: calc(100% - 275px)" data-list="{{ yearly_stastics }}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        const weekly_stastics = JSON.parse(document.getElementById('weeklyChart').dataset.list);
+        const monthly_stastics = JSON.parse(document.getElementById('monthlyChart').dataset.list);
+        const yearly_stastics = JSON.parse(document.getElementById('yearlyChart').dataset.list);
+        const weeklyChart = new ApexCharts(document.querySelector("#weeklyChart"), {
+            chart: {
+                type: 'bar',
+                height: 200
+            },
+            series: [{
+                name: 'sales',
+                data: weekly_stastics.map(e => e.sum)
+            }],
+            xaxis: {
+                categories: weekly_stastics.map(e => `${e.year}/W${e.week}`)
+            }
+            });
+
+            weeklyChart.render();
+
+        const monthlyChart = new ApexCharts(document.querySelector("#monthlyChart"), {
+            chart: {
+                type: 'bar',
+                height: 200
+            },
+            series: [{
+                name: 'sales',
+                data: monthly_stastics.map(e => e.sum)
+            }],
+            xaxis: {
+                categories: monthly_stastics.map(e => `${e.year}/${e.month}`)
+            }
+            });
+
+            monthlyChart.render();
+
+        const yearlyChart = new ApexCharts(document.querySelector("#yearlyChart"), {
+            chart: {
+                type: 'bar',
+                height: 200
+            },
+            series: [{
+                name: 'sales',
+                data: yearly_stastics.map(e => e.sum)
+            }],
+            xaxis: {
+                categories: yearly_stastics.map(e => e.year)
+            }
+            });
+
+            yearlyChart.render();
+    </script>
+{% endblock %}

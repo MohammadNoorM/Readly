@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-74%x8gpw%mswwola795tk(9wof&0u^#^h)m*^3%mp98-toym_)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'yourdomain.com']
 
 
 # Application definition
@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
     'store',
     'checkout',
+    'reports',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ar-eg'
 
 TIME_ZONE = 'UTC'
 
@@ -134,10 +136,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Looking to send emails in production? Check out our Email API/SMTP product!
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '8dd0a2528da539'
-EMAIL_HOST_PASSWORD = '871e000c626886'
-EMAIL_PORT = '2525'
+EMAIL_HOST_USER = 'b69a872d0e44c2'
+EMAIL_HOST_PASSWORD = '684b67df99142d'
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 
 SITE_URL = 'http://localhost:8000'

@@ -1,0 +1,52 @@
+{% extends "admin/change_form.html" %}
+{% load i18n my_filters %}
+
+{% block content %}
+    <fieldset class="module aligned mb-0">
+        <div class="form-row">
+            <label>{% trans "Customer" %}:</label>
+            <div class="readonly">{{ original.transaction.customer_name }}</div>
+        </div>
+    </fieldset>
+    <fieldset class="module aligned mb-0">
+        <div class="form-row">
+            <label>{% trans "Email" %}:</label>
+            <div class="readonly">{{ original.transaction.customer_email }}</div>
+        </div>
+    </fieldset>
+    <fieldset class="module aligned mb-0">
+        <div class="form-row">
+            <label>{% trans "Payment Method" %}:</label>
+            <div class="readonly">{{ original.transaction.get_payment_method_display }}</div>
+        </div>
+    </fieldset>
+    <fieldset class="module aligned mb-0">
+        <div class="form-row">
+            <label>{% trans "Amount" %}:</label>
+            <div class="readonly">{{ original.transaction.amount|currency }}</div>
+        </div>
+    </fieldset>
+    <fieldset class="module aligned mb-0">
+        <div class="form-row">
+            <label>{% trans "Date" %}:</label>
+            <div class="readonly">{{ original.created_at }}</div>
+        </div>
+    </fieldset>
+    <h1>{% trans "Products" %}</h1>
+    <table style="min-width: 600px">
+        <thead>
+            <tr>
+                <th>{% trans "Product" %}</th>
+                <th>{% trans "Price" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in original.orderitem_set.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.price|currency }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
