@@ -8,8 +8,8 @@ class TransactionStatus(models.IntegerChoices):
     Completed = 1, _("Completed")
 
 class PaymentMethod(models.IntegerChoices):
-    Paypal = 1, _("Stripe")
-    Stripe = 2, _("Paypal")
+    Paypal = 1, _("Paypal")
+    Stripe = 2, _("Stripe")
 
 
 class Transaction(models.Model):

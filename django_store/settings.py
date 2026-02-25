@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-74%x8gpw%mswwola795tk(9wof&0u^#^h)m*^3%mp98-toym_)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'yourdomain.com']
 
@@ -135,22 +136,21 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Looking to send emails in production? Check out our Email API/SMTP product!
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'b69a872d0e44c2'
-EMAIL_HOST_PASSWORD = '684b67df99142d'
-EMAIL_PORT = 2525
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
 
-
-SITE_URL = 'http://localhost:8000'
+SITE_URL = config('SITE_URL', default='http://localhost:8000')
 
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51RzdzsHg5TTS3XKMaIXY9rlCo9dDJIvXZR7TpdB1uVYnMqmdQuBMfYphsqEDBwkZnN8BJtVlxwb6WuQnswtDsetN00oBUIRPeg'
-STRIPE_SECRET_KEY = '## Read from environment variable or .env file in production'
-STRIPE_ENDPOINT_SECRET = 'whsec_fcf8b352e2fea4ea6bacb19ec63d247f5187a89c112bb2f84c10c1671f496ca8'
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+STRIPE_ENDPOINT_SECRET = config('STRIPE_ENDPOINT_SECRET')
 
 PAYPAL_TEST = True
 PAYPAL_EMAIL = 'sb-fpxp545690074@business.example.com'

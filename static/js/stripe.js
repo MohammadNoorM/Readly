@@ -6,6 +6,7 @@ async function createStripeSession() {
   switchPaymentMethod('stripe', '')
 
   const form = document.getElementById('form-user-info');
+  if (!form.reportValidity()) return;
   const formData = new FormData(form);
 
   stripeSubmit.disabled = true;

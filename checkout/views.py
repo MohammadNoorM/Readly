@@ -21,7 +21,7 @@ def stripe_transaction(request):
         return JsonResponse({'message': _('Invalid information.')}, status=400)
     stripe.api_key = settings.STRIPE_SECRET_KEY
     intent = stripe.PaymentIntent.create(
-        amount=transaction.amount * 100,
+        amount=int(transaction.amount * 100),
         currency=settings.CURRENCY,
         payment_method_types=['card'],
         metadata={'transaction': transaction.id},
@@ -40,9 +40,9 @@ def paypal_transaction(request):
         'currency_code': settings.CURRENCY,
         'item_name': f'Order #{transaction.id}',
         'invoice': transaction.id,
-        'return_url': f"http://{request.get_host()}/{reverse('store.checkout_complete')}",
-        'cancel_return': f"http://{request.get_host()}/{reverse('store.checkout')}",
-        'notify_url': f"http://{request.get_host()}/{reverse('checkout.paypal-webhook')}",
+        'return_url': f"http://{request.get_host()}{reverse('store.checkout_complete')}",
+        'cancel_return': f"http://{request.get_host()}{reverse('store.checkout')}",
+        'notify_url': f"http://{request.get_host()}{reverse('checkout.paypal-webhook')}",
     })
     return HttpResponse(form.render_form())
 

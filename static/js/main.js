@@ -33,6 +33,7 @@ function switchPaymentMethod(type, content) {
 async function createPaypalSession() {
    try {
        const form = document.getElementById('form-user-info');
+       if (!form.reportValidity()) return;
        const formData = new FormData(form);
        const { data } = await axios.post("/checkout/paypal", formData);
        switchPaymentMethod('paypal', data)
