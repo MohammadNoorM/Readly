@@ -2,65 +2,55 @@
 {% load i18n my_filters %}
 {% block content %}
 
-<div class="bg-white py-4">
-  <h1 class="text-center text-secondary">{% trans "Cart" %}</h1>
+<div class="bg-white border-b border-gray-100 py-8">
+  <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-700">{% trans "Cart" %}</h1>
 </div>
-<div class="container my-5">
+
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
   {% for item in cart_items %}
-  <div class="card my-2">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-2 text-center mb-2">
-          <img
-            src="{{ item.image.url }}"
-            alt="{{ item.name }}"
-            title=""
-            width="150"
-            class="img-thumbnail"
-          />
-        </div>
-        <div class="col my-auto text-center">{{ item.name }}</div>
-        <div class="col-md-2 col-xs-6 my-auto text-center">
-          <strong>{{ item.price|currency }}</strong>
-        </div>
-        <div class="col-md-2 my-auto text-center">
-          <button class="btn btn-secondary my-2" type="button" data-url="{% url 'store.cart_remove' item.id %}" onclick="cartRemove(this)">
-            <i class="lni lni-trash-can text-white"></i>
-          </button>
-        </div>
+  <div class="bg-white rounded-2xl shadow-sm mb-4 overflow-hidden hover:shadow-md transition">
+    <div class="flex flex-col sm:flex-row items-center p-4 gap-4">
+      <div class="flex-shrink-0">
+        <img
+          src="{{ item.image.url }}"
+          alt="{{ item.name }}"
+          class="w-24 h-24 object-cover rounded-xl"
+        />
+      </div>
+      <div class="flex-1 text-center sm:text-left">
+        <h3 class="font-semibold text-gray-800">{{ item.name }}</h3>
+      </div>
+      <div class="text-lg font-bold text-brand-600">
+        {{ item.price|currency }}
+      </div>
+      <div>
+        <button class="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition" type="button" data-url="{% url 'store.cart_remove' item.id %}" onclick="cartRemove(this)">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </button>
       </div>
     </div>
   </div>
   {% empty %}
-  <div class="h-100 p-5 text-center border rounded-3 bg-white">
-    <p class="fs-1">{% trans "Your cart is empty" %}</p>
-    <p><i class="lni lni-cart fs-1 text-muted" style="font-size: 5rem;"></i></p>
+  <div class="bg-white rounded-2xl shadow-sm p-16 text-center">
+    <svg class="w-20 h-20 mx-auto text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+    <p class="mt-4 text-xl font-medium text-gray-400">{% trans "Your cart is empty" %}</p>
   </div>
   {% endfor %}
+
   {% if cart_total > 0 %}
-  <div class="row bd-highlight">
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body">
-          <table class="table table-striped">
-            <tbody>
-              <tr>
-                <td>{% trans "Subtotal" %}</td>
-                <td>{{ cart_total|currency }}</td>
-              </tr>
-              <tr>
-                <td>{% trans "Total" %}</td>
-                <td>{{ cart_total|currency }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="d-grid gap-2">
-            <a href="{% url 'store.checkout' %}" class="btn btn-primary">
-              {% trans "Proceed to Checkout" %}
-            </a>
-          </div>
-        </div>
+  <div class="mt-8 max-w-sm ml-auto">
+    <div class="bg-white rounded-2xl shadow-sm p-6">
+      <div class="flex justify-between py-2 text-sm text-gray-500">
+        <span>{% trans "Subtotal" %}</span>
+        <span>{{ cart_total|currency }}</span>
       </div>
+      <div class="flex justify-between py-2 border-t border-gray-100 text-lg font-bold text-gray-800">
+        <span>{% trans "Total" %}</span>
+        <span>{{ cart_total|currency }}</span>
+      </div>
+      <a href="{% url 'store.checkout' %}" class="mt-4 block w-full text-center px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition">
+        {% trans "Proceed to Checkout" %}
+      </a>
     </div>
   </div>
   {% endif %}

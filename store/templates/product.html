@@ -3,109 +3,77 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="container my-5">
-        <section>
-            <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-3">
-                <div class="swiper my-auto swiper-product">
-                    <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img
-                        src="{{ product.image.url }}"
-                        class="img-fluid"
-                        alt="{{ product.name }}"
-                        />
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <div class="col-md-9">
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text mt-4">
-                    {{ product.short_description }}
-                    </p>
-                    <p class="card-text fs-4">
-                    <strong class="text-success mt-3">{{ product.price|currency }} $</strong>
-                    </p>
-                    <button
-                    class="btn btn-secondary"
-                    data-url="{% url 'store.cart_add' product.id %}"
-                    onclick="cartUpdate(this)"
-                    >
-                    {% trans 'Add to Cart' %}
-                    </button>
-                </div>
-                </div>
-            </div>
-            </div>
-        </section>
-        <section>
-            <div class="card">
-            <div class="card-header p-0 bg-white">
-                <ul
-                class="nav nav-pills nav-justified"
-                id="pills-tab"
-                role="tablist"
-                >
-                <li class="nav-item" role="presentation">
-                    <button
-                    class="nav-link active text-secondary"
-                    id="pills-home-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-home"
-                    type="button"
-                    role="tab"
-                    aria-controls="pills-home"
-                    aria-selected="true"
-                    >
-                    {% trans 'Description' %}
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button
-                    class="nav-link text-secondary"
-                    id="pills-profile-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-profile"
-                    type="button"
-                    role="tab"
-                    aria-controls="pills-profile"
-                    aria-selected="false"
-                    >
-                    {% trans 'Author' %}
-                    </button>
-                </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="tab-content" id="pills-tabContent">
-                <div
-                    class="tab-pane fade show active"
-                    id="pills-home"
-                    role="tabpanel"
-                    aria-labelledby="pills-home-tab"
-                >
-                    <p class="fs-6 text-muted">
-                    {{ product.description }}
-                    </p>
-                    
-                </div>
-                <div
-                    class="tab-pane fade"
-                    id="pills-profile"
-                    role="tabpanel"
-                    aria-labelledby="pills-contact-tab"
-                >
-                    <p class="fs-6 text-muted">{{ product.author }}</p>
-                    <p class="fs-6 text-muted">
-                    {{ product.author.bio }}
-                    </p>
-                </div>
-                </div>
-            </div>
-            </div>
-        </section>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <!-- Product Hero -->
+  <section class="bg-white rounded-2xl shadow-sm overflow-hidden mb-8">
+    <div class="flex flex-col md:flex-row">
+      <div class="md:w-1/3 bg-gray-50 flex items-center justify-center p-8">
+        <img
+          src="{{ product.image.url }}"
+          class="max-h-96 object-contain rounded-lg"
+          alt="{{ product.name }}"
+        />
+      </div>
+      <div class="md:w-2/3 p-8 flex flex-col justify-center">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900">{{ product.name }}</h1>
+        <p class="mt-4 text-gray-500 leading-relaxed">{{ product.short_description }}</p>
+        <p class="mt-6 text-3xl font-bold text-brand-600">{{ product.price|currency }}</p>
+        <div class="mt-6">
+          <button
+            class="inline-flex items-center gap-2 px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+            data-url="{% url 'store.cart_add' product.id %}"
+            onclick="cartUpdate(this)"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
+            {% trans 'Add to Cart' %}
+          </button>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <!-- Tabs Section -->
+  <section class="bg-white rounded-2xl shadow-sm overflow-hidden">
+    <div class="border-b border-gray-200">
+      <nav class="flex" role="tablist">
+        <button
+          class="tab-btn px-6 py-4 text-sm font-semibold text-brand-600 border-b-2 border-brand-500 focus:outline-none"
+          onclick="switchTab('description', this)"
+          type="button"
+        >
+          {% trans 'Description' %}
+        </button>
+        <button
+          class="tab-btn px-6 py-4 text-sm font-semibold text-gray-400 border-b-2 border-transparent hover:text-gray-600 focus:outline-none transition"
+          onclick="switchTab('author', this)"
+          type="button"
+        >
+          {% trans 'Author' %}
+        </button>
+      </nav>
+    </div>
+    <div class="p-6">
+      <div id="tab-description" class="tab-panel">
+        <p class="text-gray-500 leading-relaxed">{{ product.description }}</p>
+      </div>
+      <div id="tab-author" class="tab-panel hidden">
+        <p class="text-gray-700 font-medium">{{ product.author }}</p>
+        <p class="mt-2 text-gray-500">{{ product.author.bio }}</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+  document.getElementById('tab-' + tab).classList.remove('hidden');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('text-brand-600', 'border-brand-500');
+    b.classList.add('text-gray-400', 'border-transparent');
+  });
+  btn.classList.remove('text-gray-400', 'border-transparent');
+  btn.classList.add('text-brand-600', 'border-brand-500');
+}
+</script>
 {% endblock %}

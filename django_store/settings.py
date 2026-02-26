@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'ar-eg'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -153,7 +153,6 @@ STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 STRIPE_ENDPOINT_SECRET = config('STRIPE_ENDPOINT_SECRET')
 
 PAYPAL_TEST = True
-PAYPAL_EMAIL = 'sb-fpxp545690074@business.example.com'
-
+PAYPAL_EMAIL = config('PAYPAL_EMAIL')
 
 CURRENCY = 'USD'

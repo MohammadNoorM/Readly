@@ -1,24 +1,53 @@
 {% load static %}
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="ar" class="h-100" dir="rtl">
+<html lang="en" class="h-full scroll-smooth">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{% trans "App Name" %}</title>
-        <script defer src="{% static 'js/852.f1ab1e15.js' %}"></script>
-        <script defer src="{% static 'js/app.10c11194.js' %}"></script>
-        <link href="{% static 'css/852.css' %}" rel="stylesheet">
-        <link href="{% static 'css/app.css' %}" rel="stylesheet">
+        <title>{% trans "Readly" %}</title>
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><rect width='36' height='36' rx='8' fill='%230284c7'/><path d='M18 9.25v17.5m0-17.5C16.43 8.21 14.3 7.5 12 7.5S7.57 8.21 6 9.25v17.5C7.57 25.71 9.7 25 12 25s4.43.71 6 1.75m0-17.5C19.57 8.21 21.7 7.5 24 7.5s4.43.71 6 1.75v17.5C28.43 25.71 26.3 25 24 25s-4.43.71-6 1.75' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            brand: { 50:'#f0f9ff', 100:'#e0f2fe', 200:'#bae6fd', 300:'#7dd3fc', 400:'#38bdf8', 500:'#0ea5e9', 600:'#0284c7', 700:'#0369a1', 800:'#075985', 900:'#0c4a6e' },
+                            accent: { 400:'#facc15', 500:'#eab308' }
+                        },
+                        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+                    }
+                }
+            }
+        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+        <style>
+            .product-card:hover .product-overlay { opacity: 1; }
+            .slider-fade { animation: fadeIn 0.6s ease-in-out; }
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+            .scrollbar-hide::-webkit-scrollbar { display: none; }
+            .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+            #search-results { animation: dropIn 0.15s ease-out; }
+            .cat-dropdown-anim { animation: dropIn 0.15s ease-out; }
+            @keyframes dropIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+        </style>
     </head>
-    <body class="d-flex flex-column h-100 bg-light">
+    <body class="flex flex-col min-h-screen bg-gray-50 font-sans text-gray-800 antialiased">
         {% include "partials/header.html" %}
-        <main>
+        <main class="flex-1">
             {% block content %}
             {% endblock %}
         </main>
         {% include "partials/footer.html" %}
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script>
+            var notyf = new Notyf({ duration: 3000, position: { x: 'right', y: 'bottom' }, types: [{ type: 'error', icon: false, dismissible: true }, { type: 'success', icon: false, dismissible: true }] });
+        </script>
         <script src="https://js.stripe.com/v3/"></script>
         <script src="{% static 'js/main.js' %}"></script>
         <script src="{% static 'js/stripe.js' %}"></script>

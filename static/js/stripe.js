@@ -45,7 +45,7 @@ async function _stripeFormSubmit(e) {
   if (error.type === "card_error" || error.type === "validation_error") {
     notyf.error(error.message);
   } else {
-    notyf.error("عذرًا، هنالك خطأ ما حصل خلال عملية الدفع.");
+    notyf.error("Sorry, something went wrong during the payment process.");
   }
   stripeSubmit.disabled = false;
 }
@@ -60,20 +60,20 @@ async function _checkStripePaymentStatus() {
   const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
   switch (paymentIntent.status) {
     case "succeeded":
-      notyf.success("لقد تمت عملية الدفع بنجاح!");
+      notyf.success("Payment was successful!");
       break;
     case "processing":
-      notyf.success("عملية الدفع قيد المعالجة");
+      notyf.success("Payment is being processed");
       break;
     default:
-      notyf.error("عذرًا، هنالك خطأ ما حصل خلال عملية الدفع.");
+      notyf.error("Sorry, something went wrong during the payment process.");
       break;
   }
 }
 
 async function _stripeInit() {
     const { data } = await axios("/checkout/stripe/config");
-    stripe = Stripe(data.public_key, { locale: 'ar' });
+    stripe = Stripe(data.public_key, { locale: 'en' });
     _checkStripePaymentStatus();
 }
 

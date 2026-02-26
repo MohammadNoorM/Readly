@@ -1,27 +1,138 @@
 {% load i18n %}
-<form action="{% url 'store.category' %}" class="d-flex mx-auto">
-    <div class="input-group">
-        <input
-            name="q"
-            type="text"
-            class="form-control"
-            style="width: 400px"
-            placeholder="{% trans 'Search for products' %}"
-            value="{{ request.GET.q }}"
-        />
-        <select class="form-control" style="width: 160px" name="category">
-            <option value="">{% trans 'All Categories' %}</option>
-            {% for category in categories %}
-                <option 
-                value="{{ category.id }}"
-                {% if category.id|stringformat:'i' == request.GET.category %}
-                    selected
-                {% endif %}
-                >{{ category.name }}</option>
-            {% endfor %}
-        </select>
-        <button class="btn btn-primary" type="submit">
-            <i class="lni lni-search-alt text-white"></i>
-        </button>
+<div class="relative w-full" id="search-wrapper">
+    <form id="search-form" action="{% url 'store.category' %}" class="w-full">
+        <div class="relative flex items-center w-full group">
+            <!-- Search icon -->
+            <div class="absolute left-3 text-gray-400 group-focus-within:text-brand-500 transition-colors duration-200 pointer-events-none">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <!-- Input -->
+            <input
+                id="search-input"
+                name="q"
+                type="text"
+                class="w-full pl-9 pr-3 py-2 text-[13px] text-gray-700 placeholder-gray-400 bg-gray-100 rounded-xl border-2 border-transparent focus:bg-white focus:border-brand-400 focus:shadow-lg focus:shadow-brand-100/50 transition-all duration-200 outline-none"
+                placeholder="{% trans 'Search books, authors...' %}"
+                value="{{ request.GET.q }}"
+                autocomplete="off"
+            />
+        </div>
+    </form>
+
+    <!-- Live search results dropdown -->
+    <div id="search-results" class="hidden absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl shadow-gray-200/80 border border-gray-100 overflow-hidden z-50 max-h-[420px] overflow-y-auto ring-1 ring-black/5">
+        <!-- Loading indicator -->
+        <div id="search-loading" class="hidden px-4 py-3 flex items-center gap-2 text-sm text-gray-400">
+            <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+            Searching...
+        </div>
+        <!-- Results will be injected here -->
+        <div id="search-results-list"></div>
     </div>
-</form>
+</div>
+
+<script>
+(function() {
+    let debounceTimer;
+    const input = document.getElementById('search-input');
+    const resultsBox = document.getElementById('search-results');
+    const resultsList = document.getElementById('search-results-list');
+    const loadingEl = document.getElementById('search-loading');
+    if (!input) return;
+
+    input.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') return;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(liveSearch, 300);
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#search-wrapper')) {
+            resultsBox.classList.add('hidden');
+        }
+    });
+
+    input.addEventListener('focus', function() {
+        if (resultsList.innerHTML.trim()) resultsBox.classList.remove('hidden');
+    });
+
+    async function liveSearch() {
+        const q = input.value.trim();
+        if (!q) {
+            resultsBox.classList.add('hidden');
+            resultsList.innerHTML = '';
+            return;
+        }
+        // Show loading
+        loadingEl.classList.remove('hidden');
+        resultsBox.classList.remove('hidden');
+        resultsList.innerHTML = '';
+        try {
+            const params = new URLSearchParams();
+            params.set('q', q);
+            const { data } = await axios.get('{% url "store.search_api" %}?' + params.toString());
+            loadingEl.classList.add('hidden');
+            renderResults(data.results, q);
+        } catch (err) {
+            loadingEl.classList.add('hidden');
+            resultsList.innerHTML = '<div class="px-4 py-3 text-sm text-red-400">Something went wrong</div>';
+            console.error(err);
+        }
+    }
+
+    function renderResults(results, query) {
+        if (!results.length) {
+            resultsList.innerHTML =
+                '<div class="px-4 py-10 text-center">'
+                + '<svg class="w-10 h-10 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>'
+                + '<p class="text-sm font-medium text-gray-400">No results found</p>'
+                + '<p class="text-xs text-gray-300 mt-1">Try different keywords</p>'
+                + '</div>';
+            resultsBox.classList.remove('hidden');
+            return;
+        }
+
+        let html = '<div class="py-1.5">';
+        results.forEach(function(p, i) {
+            const name = highlightMatch(p.name, query);
+            html += '<a href="/product/' + p.id + '/" class="flex items-center gap-3 px-4 py-2.5 hover:bg-brand-50/60 transition-colors duration-150 group">'
+                + '<div class="w-11 h-11 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 ring-1 ring-gray-200/60">'
+                + '<img src="' + p.image + '" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200" alt="" loading="lazy">'
+                + '</div>'
+                + '<div class="flex-1 min-w-0">'
+                + '<p class="text-sm font-semibold text-gray-800 truncate group-hover:text-brand-700 transition-colors">' + name + '</p>'
+                + '<p class="text-xs text-gray-400 mt-0.5 truncate">' + escapeHtml(p.author) + '</p>'
+                + '</div>'
+                + '<span class="text-sm font-bold text-brand-600 whitespace-nowrap">' + p.price + ' $</span>'
+                + '</a>';
+        });
+        html += '</div>';
+
+        if (results.length >= 10) {
+            html += '<div class="border-t border-gray-100 px-4 py-2.5 text-center">'
+                + '<button type="submit" form="search-form" class="text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors">View all results &rarr;</button>'
+                + '</div>';
+        }
+
+        resultsList.innerHTML = html;
+        resultsBox.classList.remove('hidden');
+    }
+
+    function highlightMatch(text, query) {
+        if (!query) return escapeHtml(text);
+        const escaped = escapeHtml(text);
+        const regex = new RegExp('(' + escapeRegex(query) + ')', 'gi');
+        return escaped.replace(regex, '<mark class="bg-brand-100 text-brand-800 font-semibold rounded px-0.5">$1</mark>');
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function escapeRegex(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+})();
+</script>

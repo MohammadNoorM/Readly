@@ -2,100 +2,81 @@
 {% load i18n my_filters %}
 
 {% block content %}
-{% include "common/page_title.html" with  title='Checkout' %}
-<div class="bg-white py-4">
-  <h1 class="text-center text-secondary">الدفع</h1>
-</div>
-<div class="container my-5">
-  <div class="row bd-highlight">
-    <div class="col-md-12">
-      <h4 class="my-3 text-center">
-        <div class="alert alert-success py-3">
-          <h3 class="text-center">{% trans "Amount" %}</h3>
-          <h3 class="text-center">{{ cart_total|currency }}</h3>
+{% include "common/page_title.html" with title='Checkout' %}
+
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <!-- Amount Summary -->
+  <div class="bg-gradient-to-r from-brand-500 to-brand-600 rounded-2xl p-6 mb-8 text-center shadow-lg">
+    <p class="text-white/80 text-sm font-medium uppercase tracking-wide">{% trans "Amount" %}</p>
+    <p class="text-3xl font-bold text-white mt-1">{{ cart_total|currency }}</p>
+  </div>
+
+  <!-- Customer Info -->
+  <div class="bg-white rounded-2xl shadow-sm p-6 mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">{% trans "Your Information" %}</h3>
+    <form id="form-user-info" class="space-y-4">
+      {% csrf_token %}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="firstNameInput" class="block text-sm font-medium text-gray-600 mb-1">{% trans "First Name" %}</label>
+          <input
+            type="text"
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-brand-400 focus:ring-2 focus:ring-brand-100 outline-none transition text-sm"
+            id="firstNameInput"
+            name="first_name"
+            required
+          />
         </div>
-      </h4>
+        <div>
+          <label for="lastNameInput" class="block text-sm font-medium text-gray-600 mb-1">{% trans "Last Name" %}</label>
+          <input
+            type="text"
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-brand-400 focus:ring-2 focus:ring-brand-100 outline-none transition text-sm"
+            id="lastNameInput"
+            name="last_name"
+            required
+          />
+        </div>
+      </div>
+      <div>
+        <label for="emailInput" class="block text-sm font-medium text-gray-600 mb-1">{% trans "Email" %}</label>
+        <input
+          type="email"
+          class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-brand-400 focus:ring-2 focus:ring-brand-100 outline-none transition text-sm"
+          id="emailInput"
+          name="email"
+          required
+        />
+      </div>
+    </form>
+  </div>
+
+  <!-- Payment Method -->
+  <div class="mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">{% trans "Payment Method" %}</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div id="pm-paypal" class="bg-white rounded-2xl shadow-sm p-6 text-center cursor-pointer hover:shadow-md hover:border-brand-300 border-2 border-transparent transition" role="button" onclick="createPaypalSession()">
+        <p class="text-sm font-medium text-gray-600 mb-2">{% trans "PayPal" %}</p>
+        <svg class="w-10 h-10 mx-auto text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 2.56a.77.77 0 0 1 .757-.636h6.584c2.186 0 3.706.564 4.515 1.677.38.523.618 1.1.708 1.716.094.642.035 1.41-.177 2.284l-.007.031v.441l.344.193a3.26 3.26 0 0 1 .7.482c.382.385.654.863.807 1.413.159.57.214 1.253.163 2.027-.059.89-.277 1.666-.648 2.305a4.823 4.823 0 0 1-1.247 1.465 5.103 5.103 0 0 1-1.793.864c-.673.194-1.428.29-2.243.29h-.534a1.6 1.6 0 0 0-1.117.447 1.6 1.6 0 0 0-.49 1.07l-.04.22-1.165 7.39-.03.163z"/></svg>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm p-6 text-center cursor-pointer hover:shadow-md hover:border-brand-300 border-2 border-transparent transition" role="button" onclick="createStripeSession()">
+        <p class="text-sm font-medium text-gray-600 mb-2">{% trans "Credit Card" %}</p>
+        <svg class="w-10 h-10 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+      </div>
     </div>
-    <div class="col-12">
-      <h4 class="my-3">{% trans "Your Information" %}</h4>
-      <div class="card">
-        <div class="card-body">
-          <form id="form-user-info">
-            {% csrf_token %}
-            <div class="row">
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="firstNameInput" class="form-label">{% trans "First Name" %}</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstNameInput"
-                    name="first_name"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="lastNameInput" class="form-label">{% trans "Last Name" %}</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="lastNameInput"
-                    name="last_name"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="emailInput" class="form-label">{% trans "Email" %}</label>
-              <input
-                type="email"
-                class="form-control"
-                id="emailInput"
-                name="email"
-                required
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-      <h4 class="my-3">{% trans "Payment Method" %}</h4>
-      <div class="row">
-        <div class="col-md-6">
-          <div id="pm-paypal" class="card" role="button" onclick="createPaypalSession()">
-            <div class="card-body text-center">
-              <p>{% trans "PayPal" %}</p>
-              <i class="lni lni-paypal-original fs-1"></i>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card" role="button" onclick="createStripeSession()">
-            <div class="card-body text-center">
-              <p>{% trans "Credit Card" %}</p>
-              <i class="lni lni-credit-cards fs-1"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div id="payment-form-container">
-          <div id="stripe-card" class="card my-3 p-3" style="display: none">
-            <form id="payment-form">
-              <div id="payment-element"></div>
-              <button id="stripe-submit" class="btn btn-primary mt-3">
-                {% trans 'Pay Now'%}
-              </button>
-                
-            </form>
-          </div>
-          <div id="paypal-card" class="card my-3 p-3" style="display: none">
-            
-          </div>
-        </div>
-      </div>
+  </div>
+
+  <!-- Payment Forms -->
+  <div id="payment-form-container">
+    <div id="stripe-card" class="bg-white rounded-2xl shadow-sm p-6 mb-4" style="display: none">
+      <form id="payment-form">
+        <div id="payment-element"></div>
+        <button id="stripe-submit" class="mt-4 w-full px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition">
+          {% trans 'Pay Now' %}
+        </button>
+      </form>
+    </div>
+    <div id="paypal-card" class="bg-white rounded-2xl shadow-sm p-6 mb-4" style="display: none">
     </div>
   </div>
 </div>

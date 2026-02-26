@@ -81,3 +81,26 @@ def checkout(request):
 def checkout_complete(request):
     Cart.objects.filter(session=request.session.session_key).delete()
     return render(request, 'checkout-complete.html')
+
+
+def search_api(request):
+    query = request.GET.get('q', '').strip()
+    category_id = request.GET.get('category', '')
+    filters = {}
+
+    if query:
+        filters['name__icontains'] = query
+    if category_id:
+        filters['category_id'] = category_id
+
+    products = Product.objects.filter(**filters).select_related('author')[:10]
+    results = []
+    for p in products:
+        results.append({
+            'id': p.id,
+            'name': p.name,
+            'author': str(p.author) if p.author else '',
+            'price': p.price,
+            'image': p.image.url if p.image else '',
+        })
+    return JsonResponse({'results': results})

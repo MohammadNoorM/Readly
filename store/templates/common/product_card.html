@@ -1,26 +1,26 @@
 {% load i18n %} {% load my_filters %}
 
-<div class="product card mb-4">
-  <img
-    src="{{ product.image.url}}"
-    class="card-img-top"
-    alt="{{ product.name }}"
-  />
-  <div
-    class="card-img-overlay d-flex flex-column align-items-center justify-content-center"
-  >
-    <a class="btn btn-outline-light" data-url="{% url 'store.cart_add' product.id %}" onclick="cartUpdate(this)"
-      >{% trans "Add to cart" %}</a
-    >
-    <a
-      class="btn btn-outline-light mt-2"
-      href="{% url 'store.product' product.id %}"
-      >{% trans "View" %}</a
-    >
+<div class="product-card group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 mb-6">
+  <div class="relative overflow-hidden aspect-[3/4]">
+    <img
+      src="{{ product.image.url }}"
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      alt="{{ product.name }}"
+    />
+    <div class="product-overlay absolute inset-0 bg-brand-800/70 backdrop-blur-sm opacity-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300">
+      <a class="px-5 py-2 rounded-full border border-white text-white text-sm font-medium hover:bg-white hover:text-brand-700 transition cursor-pointer" data-url="{% url 'store.cart_add' product.id %}" onclick="cartUpdate(this)"
+        >{% trans "Add to cart" %}</a
+      >
+      <a
+        class="px-5 py-2 rounded-full border border-white text-white text-sm font-medium hover:bg-white hover:text-brand-700 transition"
+        href="{% url 'store.product' product.id %}"
+        >{% trans "View" %}</a
+      >
+    </div>
   </div>
-  <div class="card-body">
-    <h6 class="text-muted">{{ product.author }}</h6>
-    <h6 class="card-title">{{ product.name }}</h6>
-    <strong class="fw-bold text-success">{{ product.price|currency }}</strong>
+  <div class="p-4">
+    <p class="text-xs text-gray-400 uppercase tracking-wide">{{ product.author }}</p>
+    <h3 class="mt-1 text-sm font-semibold text-gray-800 line-clamp-2">{{ product.name }}</h3>
+    <p class="mt-2 text-brand-600 font-bold">{{ product.price|currency }}</p>
   </div>
 </div>

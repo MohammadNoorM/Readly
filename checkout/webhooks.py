@@ -98,11 +98,25 @@ def make_order(transaction_id):
             'products': products
         })
 
+        # Plain text fallback for email clients that don't support HTML
+        product_lines = "\n".join(
+            f"  - {p.name}: {p.price} $\n    Download: {p.pdf_file_url}" for p in products
+        )
+        msg_plain = (
+            f"Order Confirmation #{order.id}\n"
+            f"{'=' * 30}\n\n"
+            f"Hi {order.transaction.customer_name},\n\n"
+            f"Thank you for your order! Your payment has been confirmed.\n\n"
+            f"Your Books:\n{product_lines}\n\n"
+            f"Total: {order.transaction.amount} $\n\n"
+            f"If you have any questions, simply reply to this email."
+        )
+
         print(f"Sending email to: {order.transaction.customer_email}")
         send_mail(
-            subject="New Order - Your Digital Books",
+            subject=f"Readly - Order #{order.id} Confirmed",
             html_message=msg_html,
-            message=msg_html,
+            message=msg_plain,
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[order.transaction.customer_email],
             fail_silently=False,

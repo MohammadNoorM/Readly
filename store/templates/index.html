@@ -4,16 +4,15 @@
 {% block content %}
 {% include 'partials/slider.html' with slides=slides%}
 
-<div class="container my-5">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <section>
-    <div class="col-md-12 mb-5">
-      <p class="h1 text-center text-secondary">كتب مميزة</p>
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold text-gray-800">Featured Books</h2>
+      <p class="mt-2 text-gray-400">Discover our handpicked collection</p>
     </div>
-    <div class="row">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {% for product in products %}
-          <div class="col-md-3">
-            {% include 'common/product_card.html' with product=product %}
-          </div>
+        {% include 'common/product_card.html' with product=product %}
       {% endfor %}
     </div>
   </section>
