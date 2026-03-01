@@ -16,8 +16,8 @@ An e-commerce web application built with Django 5.2. It supports product browsin
 
 ## Tech Stack
 
-- Python 3.13
-- Django 5.2
+- Python 3.11+
+- Django 5.2.5
 - SQLite
 - Stripe API
 - PayPal IPN (django-paypal)
@@ -27,7 +27,7 @@ An e-commerce web application built with Django 5.2. It supports product browsin
 
 ## Project Structure
 
-```
+```text
 django_store/       # Project settings & configuration
 store/              # Main store app (products, categories, cart, orders)
 checkout/           # Checkout, payments & transactions
@@ -41,7 +41,7 @@ media/              # User-uploaded files
 
 ### Prerequisites
 
-- Python 3.13+
+- Python 3.11+
 - pip
 
 ### Installation
@@ -68,14 +68,18 @@ media/              # User-uploaded files
 
 4. **Configure environment variables**
 
-   Create a `.env` file in the project root with the following:
+   Create a `.env` file in the project root with the following variables:
    ```env
+   SECRET_KEY=your-django-secret-key
+   DEBUG=True
    EMAIL_HOST_USER=your-email@gmail.com
    EMAIL_HOST_PASSWORD=your-app-password
    SITE_URL=http://localhost:8000
    STRIPE_SECRET_KEY=your-stripe-secret-key
+   STRIPE_PUBLISHABLE_KEY=your-stripe-publishable-key
    STRIPE_ENDPOINT_SECRET=your-stripe-webhook-secret
-   PAYPAL_EMAIL=your-paypal-email
+   PAYPAL_RECEIVER_EMAIL=your-paypal-email
+   PAYPAL_TEST=True
    ```
 
 5. **Apply migrations**
@@ -88,12 +92,7 @@ media/              # User-uploaded files
    python manage.py createsuperuser
    ```
 
-7. **Collect static files**
-   ```bash
-   python manage.py collectstatic
-   ```
-
-8. **Run the development server**
+7. **Run the development server**
    ```bash
    python manage.py runserver
    ```
@@ -102,8 +101,8 @@ media/              # User-uploaded files
 
 ## Usage
 
-- **Admin Panel** — `http://localhost:8000/admin/` to manage products, categories, orders, and reports.
 - **Store** — `http://localhost:8000/` to browse the storefront.
+- **Admin Panel** — `http://localhost:8000/admin/` to manage products, categories, orders, and reports.
 - **Checkout** — `http://localhost:8000/checkout/` to complete a purchase.
 
 ## License
