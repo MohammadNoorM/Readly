@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-74%x8gpw%mswwola795tk(9wof&0u^#^h)m*^3%mp98-toym_)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'yourdomain.com']
 
@@ -148,11 +148,11 @@ DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
 SITE_URL = config('SITE_URL', default='http://localhost:8000')
 
 
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51RzdzsHg5TTS3XKMaIXY9rlCo9dDJIvXZR7TpdB1uVYnMqmdQuBMfYphsqEDBwkZnN8BJtVlxwb6WuQnswtDsetN00oBUIRPeg'
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 STRIPE_ENDPOINT_SECRET = config('STRIPE_ENDPOINT_SECRET')
 
-PAYPAL_TEST = True
+PAYPAL_TEST = config('PAYPAL_TEST', default=True, cast=bool)
 PAYPAL_EMAIL = config('PAYPAL_EMAIL')
 
 CURRENCY = 'USD'
