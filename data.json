@@ -1,0 +1,246 @@
+[
+  {
+    "model": "store.category",
+    "pk": 1,
+    "fields": {
+      "name": "Programming",
+      "featured": true,
+      "order": 1,
+      "created_at": "2026-03-07T10:00:00Z",
+      "updated_at": "2026-03-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "store.category",
+    "pk": 2,
+    "fields": {
+      "name": "Web Development",
+      "featured": true,
+      "order": 2,
+      "created_at": "2026-03-07T10:05:00Z",
+      "updated_at": "2026-03-07T10:05:00Z"
+    }
+  },
+  {
+    "model": "store.category",
+    "pk": 3,
+    "fields": {
+      "name": "Data Science",
+      "featured": false,
+      "order": 3,
+      "created_at": "2026-03-07T10:10:00Z",
+      "updated_at": "2026-03-07T10:10:00Z"
+    }
+  },
+  {
+    "model": "store.author",
+    "pk": 1,
+    "fields": {
+      "name": "Ahmed Hassan",
+      "bio": "Expert Python developer with 10+ years of experience.",
+      "created_at": "2026-03-07T10:00:00Z",
+      "updated_at": "2026-03-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "store.author",
+    "pk": 2,
+    "fields": {
+      "name": "Fatima Al-Rashid",
+      "bio": "Full-stack web developer specializing in Django and React.",
+      "created_at": "2026-03-07T10:05:00Z",
+      "updated_at": "2026-03-07T10:05:00Z"
+    }
+  },
+  {
+    "model": "store.author",
+    "pk": 3,
+    "fields": {
+      "name": "Mohammed Al-Mansouri",
+      "bio": "Data scientist and Machine Learning specialist.",
+      "created_at": "2026-03-07T10:10:00Z",
+      "updated_at": "2026-03-07T10:10:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 1,
+    "fields": {
+      "name": "The Art of Python Programming",
+      "short_description": "A comprehensive book on Python programming",
+      "description": "An in-depth exploration of Python programming language, covering all fundamental concepts, design patterns, and best practices for writing clean and efficient code.",
+      "price": 29.99,
+      "featured": true,
+      "category": 1,
+      "author": 1,
+      "image": "products/python-book.jpg",
+      "pdf_file": "products/python-book.pdf",
+      "created_at": "2026-03-07T10:00:00Z",
+      "updated_at": "2026-03-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 2,
+    "fields": {
+      "name": "Building Web Applications with Django",
+      "short_description": "Master Django framework for web development",
+      "description": "A complete guide to building robust and scalable web applications using the Django framework, featuring real-world examples and industry best practices.",
+      "price": 39.99,
+      "featured": true,
+      "category": 2,
+      "author": 2,
+      "image": "products/django-book.jpg",
+      "pdf_file": "products/django-book.pdf",
+      "created_at": "2026-03-07T10:05:00Z",
+      "updated_at": "2026-03-07T10:05:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 3,
+    "fields": {
+      "name": "Data Science: Theory and Practice",
+      "short_description": "Explore the world of data science and machine learning",
+      "description": "A comprehensive book covering data science fundamentals, machine learning algorithms, statistical analysis, and practical techniques for extracting insights from large datasets.",
+      "price": 49.99,
+      "featured": false,
+      "category": 3,
+      "author": 3,
+      "image": "products/data-science-book.jpg",
+      "pdf_file": "products/data-science-book.pdf",
+      "created_at": "2026-03-07T10:10:00Z",
+      "updated_at": "2026-03-07T10:10:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 4,
+    "fields": {
+      "name": "Python Advanced Topics",
+      "short_description": "Deep dive into advanced Python programming",
+      "description": "An advanced Python book exploring complex topics including decorators, generators, metaclasses, async programming, and optimization techniques for expert developers.",
+      "price": 34.99,
+      "featured": true,
+      "category": 1,
+      "author": 1,
+      "image": "products/advanced-python-book.jpg",
+      "pdf_file": "products/advanced-python-book.pdf",
+      "created_at": "2026-03-07T10:15:00Z",
+      "updated_at": "2026-03-07T10:15:00Z"
+    }
+  },
+  {
+    "model": "store.slider",
+    "pk": 1,
+    "fields": {
+      "title": "Welcome to Our Book Store",
+      "subtitle": "Discover our collection of programming books",
+      "image": "sliders/welcome.jpg",
+      "order": 1,
+      "created_at": "2026-03-07T10:00:00Z",
+      "updated_at": "2026-03-07T10:00:00Z"
+    }
+  },
+  {
+    "model": "store.slider",
+    "pk": 2,
+    "fields": {
+      "title": "Premium Books",
+      "subtitle": "Explore our selection of exclusive programming books",
+      "image": "sliders/premium.jpg",
+      "order": 2,
+      "created_at": "2026-03-07T10:05:00Z",
+      "updated_at": "2026-03-07T10:05:00Z"
+    }
+  },
+  {
+    "model": "checkout.transaction",
+    "pk": 1,
+    "fields": {
+      "session": "abc123def456",
+      "amount": 69.98,
+      "items": {
+        "product_1": 1,
+        "product_2": 1
+      },
+      "customer": {
+        "first_name": "Ahmed",
+        "last_name": "Hassan",
+        "email": "ahmed@example.com"
+      },
+      "status": 1,
+      "payment_method": 1,
+      "created_at": "2026-03-06T15:00:00Z",
+      "updated_at": "2026-03-06T15:30:00Z"
+    }
+  },
+  {
+    "model": "checkout.transaction",
+    "pk": 2,
+    "fields": {
+      "session": "xyz789uvw012",
+      "amount": 49.99,
+      "items": {
+        "product_3": 1
+      },
+      "customer": {
+        "first_name": "Fatima",
+        "last_name": "Al-Rashid",
+        "email": "fatima@example.com"
+      },
+      "status": 1,
+      "payment_method": 2,
+      "created_at": "2026-03-06T16:00:00Z",
+      "updated_at": "2026-03-06T16:15:00Z"
+    }
+  },
+  {
+    "model": "store.order",
+    "pk": 1,
+    "fields": {
+      "transaction": 1,
+      "created_at": "2026-03-06T15:30:00Z",
+      "updated_at": "2026-03-06T15:30:00Z"
+    }
+  },
+  {
+    "model": "store.order",
+    "pk": 2,
+    "fields": {
+      "transaction": 2,
+      "created_at": "2026-03-06T16:15:00Z",
+      "updated_at": "2026-03-06T16:15:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "product": 1,
+      "price": 29.99,
+      "created_at": "2026-03-06T15:30:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "product": 2,
+      "price": 39.99,
+      "created_at": "2026-03-06T15:30:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 3,
+    "fields": {
+      "order": 2,
+      "product": 3,
+      "price": 49.99,
+      "created_at": "2026-03-06T16:15:00Z"
+    }
+  }
+]
