@@ -7,7 +7,6 @@ venv/
 *.pyd
 
 /staticfiles/
-/media/
 
 .DS_Store
 *.log
