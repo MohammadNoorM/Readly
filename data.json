@@ -73,8 +73,8 @@
       "featured": true,
       "category": 1,
       "author": 1,
-      "image": "products/python-book.jpg",
-      "pdf_file": "products/python-book.pdf",
+      "image": "James.jpg",
+      "pdf_file": "Digital-Security-Hsoub-Academy-v1.0_1.pdf",
       "created_at": "2026-03-07T10:00:00Z",
       "updated_at": "2026-03-07T10:00:00Z"
     }
@@ -90,8 +90,8 @@
       "featured": true,
       "category": 2,
       "author": 2,
-      "image": "products/django-book.jpg",
-      "pdf_file": "products/django-book.pdf",
+      "image": "Pride_and_Prejudice.jpg",
+      "pdf_file": "Digital-Security-Hsoub-Academy-v1_SuE4Rus.0_1.pdf",
       "created_at": "2026-03-07T10:05:00Z",
       "updated_at": "2026-03-07T10:05:00Z"
     }
@@ -107,8 +107,8 @@
       "featured": false,
       "category": 3,
       "author": 3,
-      "image": "products/data-science-book.jpg",
-      "pdf_file": "products/data-science-book.pdf",
+      "image": "Trust.jpg",
+      "pdf_file": "Digital-Security-Hsoub-Academy-v1_Swx8D37.0_1.pdf",
       "created_at": "2026-03-07T10:10:00Z",
       "updated_at": "2026-03-07T10:10:00Z"
     }
@@ -124,8 +124,8 @@
       "featured": true,
       "category": 1,
       "author": 1,
-      "image": "products/advanced-python-book.jpg",
-      "pdf_file": "products/advanced-python-book.pdf",
+      "image": "A_Gentleman_in_Moscow.jpg",
+      "pdf_file": "Digital-Security-Hsoub-Academy-v1_ZihZOiM.0_1.pdf",
       "created_at": "2026-03-07T10:15:00Z",
       "updated_at": "2026-03-07T10:15:00Z"
     }
@@ -136,7 +136,7 @@
     "fields": {
       "title": "Welcome to Our Book Store",
       "subtitle": "Discover our collection of programming books",
-      "image": "sliders/welcome.jpg",
+      "image": "James.jpg",
       "order": 1,
       "created_at": "2026-03-07T10:00:00Z",
       "updated_at": "2026-03-07T10:00:00Z"
@@ -148,7 +148,7 @@
     "fields": {
       "title": "Premium Books",
       "subtitle": "Explore our selection of exclusive programming books",
-      "image": "sliders/premium.jpg",
+      "image": "Pride_and_Prejudice.jpg",
       "order": 2,
       "created_at": "2026-03-07T10:05:00Z",
       "updated_at": "2026-03-07T10:05:00Z"
@@ -241,6 +241,511 @@
       "product": 3,
       "price": 49.99,
       "created_at": "2026-03-06T16:15:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 5,
+    "fields": {
+      "name": "JavaScript Essential Guide",
+      "short_description": "Master JavaScript from basics to advanced",
+      "description": "Complete guide covering JavaScript fundamentals, ES6+, async programming, DOM manipulation, and modern web development techniques for building interactive web applications.",
+      "price": 32.99,
+      "featured": true,
+      "category": 2,
+      "author": 2,
+      "image": "Trust.jpg",
+      "pdf_file": "Freelancing-Remoat-Work-Guide-Hsoub-Academy-v1.2.pdf",
+      "created_at": "2026-03-07T10:20:00Z",
+      "updated_at": "2026-03-07T10:20:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 6,
+    "fields": {
+      "name": "React Best Practices",
+      "short_description": "Build modern React applications",
+      "description": "A practical guide to React development including component design, hooks, state management, performance optimization, and testing strategies for production-ready applications.",
+      "price": 37.99,
+      "featured": true,
+      "category": 2,
+      "author": 2,
+      "image": "A_Gentleman_in_Moscow.jpg",
+      "pdf_file": "دليلك_إلى_Node.js_1.0.0.png",
+      "created_at": "2026-03-07T10:25:00Z",
+      "updated_at": "2026-03-07T10:25:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 7,
+    "fields": {
+      "name": "Machine Learning Fundamentals",
+      "short_description": "Introduction to machine learning algorithms",
+      "description": "Learn the foundations of machine learning including supervised and unsupervised learning, neural networks, evaluation metrics, and practical applications with real-world datasets.",
+      "price": 44.99,
+      "featured": false,
+      "category": 3,
+      "author": 3,
+      "image": "Pride_and_Prejudice.jpg",
+      "pdf_file": "مدخل_إلى_التسويق.png",
+      "created_at": "2026-03-07T10:30:00Z",
+      "updated_at": "2026-03-07T10:30:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 8,
+    "fields": {
+      "name": "Database Design and Optimization",
+      "short_description": "Master SQL and database architecture",
+      "description": "Comprehensive guide to relational database design, query optimization, indexing strategies, normalization, and best practices for building scalable database systems.",
+      "price": 38.99,
+      "featured": true,
+      "category": 1,
+      "author": 1,
+      "image": "James.jpg",
+      "pdf_file": "مدخل_إلى_تصميم_واجهات_المستخدم.png",
+      "created_at": "2026-03-07T10:35:00Z",
+      "updated_at": "2026-03-07T10:35:00Z"
+    }
+  },
+  {
+    "model": "store.slider",
+    "pk": 3,
+    "fields": {
+      "title": "New Releases",
+      "subtitle": "Check out our latest programming books",
+      "image": "Trust.jpg",
+      "order": 3,
+      "created_at": "2026-03-07T10:10:00Z",
+      "updated_at": "2026-03-07T10:10:00Z"
+    }
+  },
+  {
+    "model": "checkout.transaction",
+    "pk": 3,
+    "fields": {
+      "session": "qwe456rty789",
+      "amount": 119.97,
+      "items": {
+        "product_5": 1,
+        "product_6": 1
+      },
+      "customer": {
+        "first_name": "Mohammed",
+        "last_name": "Al-Mansouri",
+        "email": "mohammed@example.com"
+      },
+      "status": 1,
+      "payment_method": 1,
+      "created_at": "2026-03-07T11:00:00Z",
+      "updated_at": "2026-03-07T11:30:00Z"
+    }
+  },
+  {
+    "model": "checkout.transaction",
+    "pk": 4,
+    "fields": {
+      "session": "asd123fgh456",
+      "amount": 44.99,
+      "items": {
+        "product_7": 1
+      },
+      "customer": {
+        "first_name": "Sara",
+        "last_name": "Ahmed",
+        "email": "sara@example.com"
+      },
+      "status": 1,
+      "payment_method": 2,
+      "created_at": "2026-03-07T12:00:00Z",
+      "updated_at": "2026-03-07T12:15:00Z"
+    }
+  },
+  {
+    "model": "store.order",
+    "pk": 3,
+    "fields": {
+      "transaction": 3,
+      "created_at": "2026-03-07T11:30:00Z",
+      "updated_at": "2026-03-07T11:30:00Z"
+    }
+  },
+  {
+    "model": "store.order",
+    "pk": 4,
+    "fields": {
+      "transaction": 4,
+      "created_at": "2026-03-07T12:15:00Z",
+      "updated_at": "2026-03-07T12:15:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 4,
+    "fields": {
+      "order": 3,
+      "product": 5,
+      "price": 32.99,
+      "created_at": "2026-03-07T11:30:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 5,
+    "fields": {
+      "order": 3,
+      "product": 6,
+      "price": 37.99,
+      "created_at": "2026-03-07T11:30:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 6,
+    "fields": {
+      "order": 4,
+      "product": 7,
+      "price": 44.99,
+      "created_at": "2026-03-07T12:15:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 9,
+    "fields": {
+      "name": "Web Security Essentials",
+      "short_description": "Secure your web applications",
+      "description": "Complete guide to web application security including authentication, authorization, cryptography, secure coding practices, and defending against common vulnerabilities.",
+      "price": 41.99,
+      "featured": true,
+      "category": 2,
+      "author": 2,
+      "image": "Trust.jpg",
+      "pdf_file": "Digital-Security-Hsoub-Academy-v1.0_1.pdf",
+      "created_at": "2026-03-07T10:40:00Z",
+      "updated_at": "2026-03-07T10:40:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 10,
+    "fields": {
+      "name": "Cloud Computing with AWS",
+      "short_description": "Build scalable applications on AWS",
+      "description": "Master Amazon Web Services including EC2, S3, Lambda, databases, networking, and best practices for building cloud-native applications.",
+      "price": 45.99,
+      "featured": true,
+      "category": 2,
+      "author": 2,
+      "image": "A_Gentleman_in_Moscow.jpg",
+      "pdf_file": "Freelancing-Remoat-Work-Guide-Hsoub-Academy-v1.2.pdf",
+      "created_at": "2026-03-07T10:45:00Z",
+      "updated_at": "2026-03-07T10:45:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 11,
+    "fields": {
+      "name": "Deep Learning with TensorFlow",
+      "short_description": "Build neural networks with TensorFlow",
+      "description": "Comprehensive guide to deep learning frameworks, CNNs, RNNs, transformer models, and practical implementations for computer vision and NLP tasks.",
+      "price": 52.99,
+      "featured": false,
+      "category": 3,
+      "author": 3,
+      "image": "Pride_and_Prejudice.jpg",
+      "pdf_file": "دليلك_إلى_Node.js_1.0.0.png",
+      "created_at": "2026-03-07T10:50:00Z",
+      "updated_at": "2026-03-07T10:50:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 12,
+    "fields": {
+      "name": "DevOps and CI/CD Pipelines",
+      "short_description": "Master deployment automation",
+      "description": "Learn DevOps principles, Docker, Kubernetes, Jenkins, GitLab CI, infrastructure as code, and continuous integration/deployment strategies.",
+      "price": 43.99,
+      "featured": true,
+      "category": 1,
+      "author": 1,
+      "image": "James.jpg",
+      "pdf_file": "مدخل_إلى_التسويق.png",
+      "created_at": "2026-03-07T10:55:00Z",
+      "updated_at": "2026-03-07T10:55:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 13,
+    "fields": {
+      "name": "Mobile Development with Flutter",
+      "short_description": "Create cross-platform mobile apps",
+      "description": "Complete Flutter guide for building beautiful, natively compiled applications for iOS and Android from a single codebase.",
+      "price": 39.99,
+      "featured": true,
+      "category": 2,
+      "author": 2,
+      "image": "Trust.jpg",
+      "pdf_file": "مدخل_إلى_تصميم_واجهات_المستخدم.png",
+      "created_at": "2026-03-07T11:00:00Z",
+      "updated_at": "2026-03-07T11:00:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 14,
+    "fields": {
+      "name": "Microservices Architecture",
+      "short_description": "Design scalable distributed systems",
+      "description": "In-depth exploration of microservices patterns, service mesh, API gateways, event-driven architecture, and distributed system design principles.",
+      "price": 48.99,
+      "featured": false,
+      "category": 1,
+      "author": 1,
+      "image": "A_Gentleman_in_Moscow.jpg",
+      "pdf_file": "Digital-Security-Hsoub-Academy-v1.0_1.pdf",
+      "created_at": "2026-03-07T11:05:00Z",
+      "updated_at": "2026-03-07T11:05:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 15,
+    "fields": {
+      "name": "Natural Language Processing",
+      "short_description": "Build intelligent NLP applications",
+      "description": "Master NLP techniques including tokenization, sentiment analysis, named entity recognition, machine translation, and large language models.",
+      "price": 50.99,
+      "featured": true,
+      "category": 3,
+      "author": 3,
+      "image": "Pride_and_Prejudice.jpg",
+      "pdf_file": "Freelancing-Remoat-Work-Guide-Hsoub-Academy-v1.2.pdf",
+      "created_at": "2026-03-07T11:10:00Z",
+      "updated_at": "2026-03-07T11:10:00Z"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 16,
+    "fields": {
+      "name": "GraphQL and Modern APIs",
+      "short_description": "Build powerful API systems",
+      "description": "Complete guide to GraphQL, query optimization, subscriptions, schema design, and building efficient APIs compared to traditional REST architecture.",
+      "price": 36.99,
+      "featured": true,
+      "category": 2,
+      "author": 2,
+      "image": "James.jpg",
+      "pdf_file": "دليلك_إلى_Node.js_1.0.0.png",
+      "created_at": "2026-03-07T11:15:00Z",
+      "updated_at": "2026-03-07T11:15:00Z"
+    }
+  },
+  {
+    "model": "checkout.transaction",
+    "pk": 5,
+    "fields": {
+      "session": "zxc789qwe456",
+      "amount": 41.99,
+      "items": {
+        "product_9": 1
+      },
+      "customer": {
+        "first_name": "Omar",
+        "last_name": "Ibrahim",
+        "email": "omar@example.com"
+      },
+      "status": 1,
+      "payment_method": 1,
+      "created_at": "2026-03-07T13:00:00Z",
+      "updated_at": "2026-03-07T13:15:00Z"
+    }
+  },
+  {
+    "model": "checkout.transaction",
+    "pk": 6,
+    "fields": {
+      "session": "poi456lkj123",
+      "amount": 211.85,
+      "items": {
+        "product_10": 1,
+        "product_11": 1,
+        "product_12": 1
+      },
+      "customer": {
+        "first_name": "Layla",
+        "last_name": "Hassan",
+        "email": "layla@example.com"
+      },
+      "status": 1,
+      "payment_method": 2,
+      "created_at": "2026-03-07T13:30:00Z",
+      "updated_at": "2026-03-07T14:00:00Z"
+    }
+  },
+  {
+    "model": "checkout.transaction",
+    "pk": 7,
+    "fields": {
+      "session": "mno987klm654",
+      "amount": 137.97,
+      "items": {
+        "product_13": 1,
+        "product_16": 1
+      },
+      "customer": {
+        "first_name": "Karim",
+        "last_name": "Ali",
+        "email": "karim@example.com"
+      },
+      "status": 1,
+      "payment_method": 1,
+      "created_at": "2026-03-07T14:30:00Z",
+      "updated_at": "2026-03-07T15:00:00Z"
+    }
+  },
+  {
+    "model": "checkout.transaction",
+    "pk": 8,
+    "fields": {
+      "session": "uvw321otq789",
+      "amount": 99.98,
+      "items": {
+        "product_14": 1,
+        "product_15": 1
+      },
+      "customer": {
+        "first_name": "Noor",
+        "last_name": "Ahmed",
+        "email": "noor@example.com"
+      },
+      "status": 1,
+      "payment_method": 2,
+      "created_at": "2026-03-07T15:30:00Z",
+      "updated_at": "2026-03-07T16:00:00Z"
+    }
+  },
+  {
+    "model": "store.order",
+    "pk": 5,
+    "fields": {
+      "transaction": 5,
+      "created_at": "2026-03-07T13:15:00Z",
+      "updated_at": "2026-03-07T13:15:00Z"
+    }
+  },
+  {
+    "model": "store.order",
+    "pk": 6,
+    "fields": {
+      "transaction": 6,
+      "created_at": "2026-03-07T14:00:00Z",
+      "updated_at": "2026-03-07T14:00:00Z"
+    }
+  },
+  {
+    "model": "store.order",
+    "pk": 7,
+    "fields": {
+      "transaction": 7,
+      "created_at": "2026-03-07T15:00:00Z",
+      "updated_at": "2026-03-07T15:00:00Z"
+    }
+  },
+  {
+    "model": "store.order",
+    "pk": 8,
+    "fields": {
+      "transaction": 8,
+      "created_at": "2026-03-07T16:00:00Z",
+      "updated_at": "2026-03-07T16:00:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 7,
+    "fields": {
+      "order": 5,
+      "product": 9,
+      "price": 41.99,
+      "created_at": "2026-03-07T13:15:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 8,
+    "fields": {
+      "order": 6,
+      "product": 10,
+      "price": 45.99,
+      "created_at": "2026-03-07T14:00:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 9,
+    "fields": {
+      "order": 6,
+      "product": 11,
+      "price": 52.99,
+      "created_at": "2026-03-07T14:00:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 10,
+    "fields": {
+      "order": 6,
+      "product": 12,
+      "price": 43.99,
+      "created_at": "2026-03-07T14:00:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 11,
+    "fields": {
+      "order": 7,
+      "product": 13,
+      "price": 39.99,
+      "created_at": "2026-03-07T15:00:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 12,
+    "fields": {
+      "order": 7,
+      "product": 16,
+      "price": 36.99,
+      "created_at": "2026-03-07T15:00:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 13,
+    "fields": {
+      "order": 8,
+      "product": 14,
+      "price": 48.99,
+      "created_at": "2026-03-07T16:00:00Z"
+    }
+  },
+  {
+    "model": "store.orderitem",
+    "pk": 14,
+    "fields": {
+      "order": 8,
+      "product": 15,
+      "price": 50.99,
+      "created_at": "2026-03-07T16:00:00Z"
     }
   }
 ]
