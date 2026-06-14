@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +29,34 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
+
+# Render sets RENDER_EXTERNAL_HOSTNAME automatically for every web service
+# (e.g. "readly.onrender.com"). Add it so the app responds on that host
+# without any extra configuration.
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+# Django 4+ requires an explicit scheme for CSRF-trusted origins. Add any
+# custom domain(s) via the CSRF_TRUSTED_ORIGINS env var, comma-separated,
+# e.g. "https://www.example.com,https://example.com"
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in config('CSRF_TRUSTED_ORIGINS', default='').split(',')
+    if origin.strip()
+]
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
+
+# Render's load balancer terminates TLS and forwards requests over HTTP,
+# setting this header so Django can correctly detect HTTPS requests.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 3600
 
 
 # Application definition
@@ -83,16 +112,27 @@ WSGI_APPLICATION = 'django_store.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+#
+# DATABASE_URL is expected to be a Neon Postgres connection string, e.g.
+#   postgresql://user:password@ep-xxxx.region.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+# conn_health_checks is recommended by Neon: their computes go idle and
+# close connections after 5 minutes, so Django verifies a pooled connection
+# is still alive before reusing it (and transparently reconnects if not).
+# For local development without DATABASE_URL, fall back to the individual
+# DB_* variables.
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='5432'),
-    }
+    'default': dj_database_url.config(
+        default=(
+            f"postgresql://{config('DB_USER', default='postgres')}:"
+            f"{config('DB_PASSWORD', default='postgres')}@"
+            f"{config('DB_HOST', default='localhost')}:"
+            f"{config('DB_PORT', default='5432')}/"
+            f"{config('DB_NAME', default='readly')}"
+        ),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 
@@ -133,6 +173,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -156,7 +200,7 @@ STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 STRIPE_ENDPOINT_SECRET = config('STRIPE_ENDPOINT_SECRET')
 
-PAYPAL_TEST = True
+PAYPAL_TEST = config('PAYPAL_TEST', default=False, cast=bool)
 PAYPAL_EMAIL = config('PAYPAL_EMAIL')
 
 CURRENCY = 'USD'
